@@ -33,4 +33,13 @@ namespace WPF_Chess.Tiles
         Down,
         DownRight
     }
+
+    public enum SpecialMoves
+    {
+        None,
+        Pawn,
+        Rochade,
+        EnPasse,
+        Check
+    }
 }

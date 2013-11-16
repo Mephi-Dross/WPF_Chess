@@ -40,7 +40,7 @@ namespace WPF_Chess.Tiles
                         if (Position.Y + 1 <= 7)
                         {
                             Point moveUp = new Point(Position.X, Position.Y + 1);
-                            possibleMoves.Add(new ChessMove((int)moveUp.X, (int)moveUp.Y, MoveDirection.Down));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUp.X, (int)moveUp.Y), MoveDirection.Down));
                         }
 
                         if (!HasBeenMoved)
@@ -48,20 +48,20 @@ namespace WPF_Chess.Tiles
                             if (Position.Y + 2 <= 7)
                             {
                                 Point moveDown = new Point(Position.X, Position.Y + 2);
-                                possibleMoves.Add(new ChessMove((int)moveDown.X, (int)moveDown.Y, MoveDirection.Down));
+                                possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDown.X, (int)moveDown.Y), MoveDirection.Down, SpecialMoves.Pawn));
                             }
                         }
 
                         if (Position.X - 1 >= 1 && Position.Y + 1 <= 7)
                         {
                             Point moveDownLeft = new Point(Position.X - 1, Position.Y + 1);
-                            possibleMoves.Add(new ChessMove((int)moveDownLeft.X, (int)moveDownLeft.Y, MoveDirection.DownLeft));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDownLeft.X, (int)moveDownLeft.Y), MoveDirection.DownLeft, SpecialMoves.Pawn));
                         }
 
                         if (Position.X + 1 <= 8 && Position.Y + 1 <= 7)
                         {
                             Point moveDownRight = new Point(Position.X + 1, Position.Y + 1);
-                            possibleMoves.Add(new ChessMove((int)moveDownRight.X, (int)moveDownRight.Y, MoveDirection.DownRight));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDownRight.X, (int)moveDownRight.Y), MoveDirection.DownRight, SpecialMoves.Pawn));
                         }
 
                         break;
@@ -69,7 +69,7 @@ namespace WPF_Chess.Tiles
                         if (Position.Y - 1 >= 0)
                         {
                             Point moveUp = new Point(Position.X, Position.Y - 1);
-                            possibleMoves.Add(new ChessMove((int)moveUp.X, (int)moveUp.Y, MoveDirection.Up));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUp.X, (int)moveUp.Y), MoveDirection.Up));
                         }
 
                         if (!HasBeenMoved)
@@ -77,20 +77,20 @@ namespace WPF_Chess.Tiles
                             if (Position.Y - 2 >= 0)
                             {
                                 Point moveUp = new Point(Position.X, Position.Y - 2);
-                                possibleMoves.Add(new ChessMove((int)moveUp.X, (int)moveUp.Y, MoveDirection.Up));
+                                possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUp.X, (int)moveUp.Y), MoveDirection.Up, SpecialMoves.Pawn));
                             }
                         }
 
                         if (Position.X - 1 >= 1 && Position.Y - 1 >= 0)
                         {
                             Point moveUpLeft = new Point(Position.X - 1, Position.Y - 1);
-                            possibleMoves.Add(new ChessMove((int)moveUpLeft.X, (int)moveUpLeft.Y, MoveDirection.DownLeft));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUpLeft.X, (int)moveUpLeft.Y), MoveDirection.DownLeft, SpecialMoves.Pawn));
                         }
 
                         if (Position.X + 1 <= 8 && Position.Y - 1 >= 0)
                         {
                             Point moveUpRight = new Point(Position.X + 1, Position.Y - 1);
-                            possibleMoves.Add(new ChessMove((int)moveUpRight.X, (int)moveUpRight.Y, MoveDirection.DownRight));
+                            possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUpRight.X, (int)moveUpRight.Y), MoveDirection.DownRight, SpecialMoves.Pawn));
                         }
 
                         break;

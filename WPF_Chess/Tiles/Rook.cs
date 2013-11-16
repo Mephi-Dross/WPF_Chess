@@ -38,25 +38,25 @@ namespace WPF_Chess.Tiles
                     if (Position.Y - i >= 0 && Position.Y - i <= 7)
                     {
                         Point up = new Point(Position.X, Position.Y - i);
-                        possibleMoves.Add(new ChessMove((int)up.X, (int)up.Y, MoveDirection.Up));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)up.X, (int)up.Y), MoveDirection.Up));
                     }
 
                     if (Position.X - i >= 1 && Position.X - i <= 8)
                     {
                         Point left = new Point(Position.X - i, Position.Y);
-                        possibleMoves.Add(new ChessMove((int)left.X, (int)left.Y, MoveDirection.Left));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)left.X, (int)left.Y), MoveDirection.Left));
                     }
 
                     if (Position.X + i >= 1 && Position.X + i <= 8)
                     {
                         Point right = new Point(Position.X + i, Position.Y);
-                        possibleMoves.Add(new ChessMove((int)right.X, (int)right.Y, MoveDirection.Right));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)right.X, (int)right.Y), MoveDirection.Right));
                     }
 
                     if (Position.Y + i >= 0 && Position.Y + i <= 7)
                     {
                         Point down = new Point(Position.X, Position.Y + i);
-                        possibleMoves.Add(new ChessMove((int)down.X, (int)down.Y, MoveDirection.Down));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)down.X, (int)down.Y), MoveDirection.Down));
                     }
                 }
             }

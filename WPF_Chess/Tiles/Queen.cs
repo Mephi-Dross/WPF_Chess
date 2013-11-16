@@ -33,7 +33,57 @@ namespace WPF_Chess.Tiles
             if (Position != null)
             {
                 //Get positions this tile can move to and add to list.
-                
+
+                for (int i = 1; i < 8; i++)
+                {
+                    if (Position.X - i >= 1 && Position.Y - i >= 0)
+                    {
+                        Point moveUpLeft = new Point(Position.X - i, Position.Y - i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUpLeft.X, (int)moveUpLeft.Y), MoveDirection.UpLeft));
+                    }
+
+                    if (Position.Y - i >= 0)
+                    {
+                        Point moveUp = new Point(Position.X, Position.Y - i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUp.X, (int)moveUp.Y), MoveDirection.Up));
+                    }
+
+                    if (Position.X + i <= 8 && Position.Y - i >= 0)
+                    {
+                        Point moveUpRight = new Point(Position.X + i, Position.Y - i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveUpRight.X, (int)moveUpRight.Y), MoveDirection.UpRight));
+                    }
+
+                    if (Position.X - i >= 1)
+                    {
+                        Point moveLeft = new Point(Position.X - i, Position.Y);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveLeft.X, (int)moveLeft.Y), MoveDirection.Left));
+                    }
+
+                    if (Position.X + i <= 8)
+                    {
+                        Point moveRight = new Point(Position.X + i, Position.Y);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveRight.X, (int)moveRight.Y), MoveDirection.Right));
+                    }
+
+                    if (Position.X - i >= 1 && Position.Y + i <= 7)
+                    {
+                        Point moveDownLeft = new Point(Position.X - i, Position.Y + i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDownLeft.X, (int)moveDownLeft.Y), MoveDirection.DownLeft));
+                    }
+
+                    if (Position.Y + i <= 7)
+                    {
+                        Point moveDown = new Point(Position.X, Position.Y + i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDown.X, (int)moveDown.Y), MoveDirection.Down));
+                    }
+
+                    if (Position.X + i <= 8 && Position.Y + i <= 7)
+                    {
+                        Point moveDownRight = new Point(Position.X + i, Position.Y + i);
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)moveDownRight.X, (int)moveDownRight.Y), MoveDirection.DownRight));
+                    }
+                }
             }
 
             return possibleMoves;

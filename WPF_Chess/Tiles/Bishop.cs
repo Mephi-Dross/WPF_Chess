@@ -38,25 +38,25 @@ namespace WPF_Chess.Tiles
                     if (Position.X - i >= 1 && Position.X - i <= 8 && Position.Y - i >= 0 && Position.Y - i <= 7)
                     {
                         Point UpLeft = new Point(Position.X - i, Position.Y - i);
-                        possibleMoves.Add(new ChessMove((int)UpLeft.X, (int)UpLeft.Y, MoveDirection.UpLeft));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)UpLeft.X, (int)UpLeft.Y), MoveDirection.UpLeft));
                     }
 
                     if (Position.X + i >= 1 && Position.X + i <= 8 && Position.Y - i >= 0 && Position.Y - i <= 7)
                     {
                         Point UpRight = new Point(Position.X + i, Position.Y - i);
-                        possibleMoves.Add(new ChessMove((int)UpRight.X, (int)UpRight.Y, MoveDirection.UpRight));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)UpRight.X, (int)UpRight.Y), MoveDirection.UpRight));
                     }
 
                     if (Position.X - i >= 1 && Position.X - i <= 8 && Position.Y + i >= 0 && Position.Y + i <= 7)
                     {
                         Point diagonalDownLeft = new Point(Position.X - i, Position.Y + i);
-                        possibleMoves.Add(new ChessMove((int)diagonalDownLeft.X, (int)diagonalDownLeft.Y, MoveDirection.DownLeft));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)diagonalDownLeft.X, (int)diagonalDownLeft.Y), MoveDirection.DownLeft));
                     }
 
                     if (Position.X + i >= 1 && Position.X + i <= 8 && Position.Y + i >= 0 && Position.Y + i <= 7)
                     {
                         Point diagonalDownRight = new Point(Position.X + i, Position.Y + i);
-                        possibleMoves.Add(new ChessMove((int)diagonalDownRight.X, (int)diagonalDownRight.Y, MoveDirection.DownRight));
+                        possibleMoves.Add(new ChessMove(this, this.Position, new Point((int)diagonalDownRight.X, (int)diagonalDownRight.Y), MoveDirection.DownRight));
                     }
                 }
             }

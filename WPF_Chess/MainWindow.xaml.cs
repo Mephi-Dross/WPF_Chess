@@ -35,6 +35,7 @@ namespace WPF_Chess
             GameHelper.ChessPieces = new List<IChessPiece>();
             GameHelper.PlayedMoves = new List<ChessMove>();
             GameHelper.CurrentPlayer = PieceColor.White;
+            HighlightedChessPiece = null;
 
             #region CreateChessPieces
             //Spawn all game tiles on their correct positions.
@@ -111,7 +112,7 @@ namespace WPF_Chess
                         {
                             HighlightPiece(piece);
                             HighlightMoves(piece);
-                            HighlightSpecialMoves(piece);
+                            //HighlightSpecialMoves(piece);
 
                             piece.IsHighlighted = true;
                             HighlightedChessPiece = piece;
@@ -242,9 +243,7 @@ namespace WPF_Chess
 
         private void HighlightMoves(IChessPiece piece)
         {
-            List<ChessMove> moves = piece.PossibleMoves.Where(p => p.SpecialMove == SpecialMoves.None).ToList();
-
-            foreach (var move in piece.PossibleMoves.Where(p => p.SpecialMove == SpecialMoves.None))
+            foreach (var move in GameHelper.GetPlayableMoves(piece))
             {
                 Rectangle highlight = new Rectangle();
                 highlight.Fill = Brushes.RoyalBlue;
@@ -253,78 +252,13 @@ namespace WPF_Chess
                 Grid.SetColumn(highlight, Convert.ToInt32(move.NewPosition.X));
                 Grid.SetRow(highlight, Convert.ToInt32(move.NewPosition.Y));
 
-                //Do not highlight if field is obstructed by friendly piece, highlight red if obstructed by enemy piece.
+                //Highlight red if obstructed by enemy piece.
                 IChessPiece obstruction = GameHelper.ChessPieces.FirstOrDefault(p => p.Position.X == move.NewPosition.X && p.Position.Y == move.NewPosition.Y);
-
                 if (obstruction != null)
-                {
-                    if (obstruction.PieceColor == piece.PieceColor)
-                    {
-                        //Obstructed by friend
-                        moves.RemoveAll(p => p.Direction == move.Direction);
-                    }
-                    else
-                    {
-                        //Obstructed by enemy
-                        highlight.Fill = Brushes.Red;
+                    highlight.Fill = Brushes.Red;
 
-                        if (moves.FirstOrDefault(m => m.NewPosition.X == move.NewPosition.X && m.NewPosition.Y == move.NewPosition.Y && m.Direction == move.Direction) != null)
-                        {
-                            if (piece.PieceType == PieceType.Pawn)
-                            {
-                                switch (piece.PieceColor)
-                                {
-                                    case PieceColor.Black:
-                                        if (move.Direction != MoveDirection.Down)
-                                        {
-                                            HighlightLayer.Children.Add(highlight);
-                                        }
-                                        break;
-                                    case PieceColor.White:
-                                        if (move.Direction != MoveDirection.Up)
-                                        {
-                                            HighlightLayer.Children.Add(highlight);
-                                        }
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                HighlightLayer.Children.Add(highlight);
-                            }
-                        }
-
-                        moves.RemoveAll(p => p.Direction == move.Direction);
-                    }
-                }
-                else
-                {
-                    if (moves.FirstOrDefault(m => m.NewPosition.X == move.NewPosition.X && m.NewPosition.Y == move.NewPosition.Y && m.Direction == move.Direction) != null)
-                    {
-                        if (piece.PieceType == PieceType.Pawn)
-                        {
-                            switch (piece.PieceColor)
-                            {
-                                case PieceColor.Black:
-                                    if (move.Direction == MoveDirection.Down)
-                                    {
-                                        HighlightLayer.Children.Add(highlight);
-                                    }
-                                    break;
-                                case PieceColor.White:
-                                    if (move.Direction == MoveDirection.Up)
-                                    {
-                                        HighlightLayer.Children.Add(highlight);
-                                    }
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            HighlightLayer.Children.Add(highlight);
-                        }
-                    }
-                }
+                HighlightLayer.Children.Add(highlight);
+                
             }
         }
 
@@ -332,28 +266,7 @@ namespace WPF_Chess
         {
             List<ChessMove> specialMoves = piece.PossibleMoves.Where(p => p.SpecialMove != SpecialMoves.None).ToList();
 
-            //foreach (var move in piece.PossibleMoves.Where(p => p.SpecialMove != SpecialMoves.None))
-            //{
-            //    switch (piece.PieceType)
-            //    {
-            //        case PieceType.King:
-            //            break;
-            //        case PieceType.Queen:
-            //            break;
-            //        case PieceType.Rook:
-            //            break;
-            //        case PieceType.Bishop:
-            //            break;
-            //        case PieceType.Knight:
-            //            break;
-            //        case PieceType.Pawn:
-            //            break;
-            //    }
-            //}
-
-            //TODO: Implement special moves
-
-            foreach (var move in piece.PossibleMoves.Where(p => p.SpecialMove != SpecialMoves.None))
+            foreach (var move in GameHelper.GetPlayableMoves(piece))
             {
                 Rectangle highlight = new Rectangle();
                 highlight.Fill = Brushes.RoyalBlue;
@@ -362,78 +275,12 @@ namespace WPF_Chess
                 Grid.SetColumn(highlight, Convert.ToInt32(move.NewPosition.X));
                 Grid.SetRow(highlight, Convert.ToInt32(move.NewPosition.Y));
 
-                //Do not highlight if field is obstructed by friendly piece, highlight red if obstructed by enemy piece.
+                //Highlight red if obstructed by enemy piece.
                 IChessPiece obstruction = GameHelper.ChessPieces.FirstOrDefault(p => p.Position.X == move.NewPosition.X && p.Position.Y == move.NewPosition.Y);
-
                 if (obstruction != null)
-                {
-                    if (obstruction.PieceColor == piece.PieceColor)
-                    {
-                        //Obstructed by friend
-                        specialMoves.RemoveAll(p => p.Direction == move.Direction);
-                    }
-                    else
-                    {
-                        //Obstructed by enemy
-                        highlight.Fill = Brushes.Red;
+                    highlight.Fill = Brushes.Red;
 
-                        if (specialMoves.FirstOrDefault(m => m.NewPosition.X == move.NewPosition.X && m.NewPosition.Y == move.NewPosition.Y && m.Direction == move.Direction) != null)
-                        {
-                            if (piece.PieceType == PieceType.Pawn)
-                            {
-                                switch (piece.PieceColor)
-                                {
-                                    case PieceColor.Black:
-                                        if (move.Direction != MoveDirection.Down)
-                                        {
-                                            HighlightLayer.Children.Add(highlight);
-                                        }
-                                        break;
-                                    case PieceColor.White:
-                                        if (move.Direction != MoveDirection.Up)
-                                        {
-                                            HighlightLayer.Children.Add(highlight);
-                                        }
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                HighlightLayer.Children.Add(highlight);
-                            }
-                        }
-
-                        specialMoves.RemoveAll(p => p.Direction == move.Direction);
-                    }
-                }
-                else
-                {
-                    if (specialMoves.FirstOrDefault(m => m.NewPosition.X == move.NewPosition.X && m.NewPosition.Y == move.NewPosition.Y && m.Direction == move.Direction) != null)
-                    {
-                        if (piece.PieceType == PieceType.Pawn)
-                        {
-                            switch (piece.PieceColor)
-                            {
-                                case PieceColor.Black:
-                                    if (move.Direction == MoveDirection.Down)
-                                    {
-                                        HighlightLayer.Children.Add(highlight);
-                                    }
-                                    break;
-                                case PieceColor.White:
-                                    if (move.Direction == MoveDirection.Up)
-                                    {
-                                        HighlightLayer.Children.Add(highlight);
-                                    }
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            HighlightLayer.Children.Add(highlight);
-                        }
-                    }
-                }
+                HighlightLayer.Children.Add(highlight);
             }
         }
 

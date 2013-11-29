@@ -27,5 +27,47 @@ namespace WPF_Chess.Tiles
         public Point NewPosition { get; set; }
         public MoveDirection Direction { get; set; }
         public SpecialMoves SpecialMove { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if(!(obj is ChessMove))
+                return false;
+
+            if (((ChessMove)obj).Piece != this.Piece)
+                return false;
+
+            if (((ChessMove)obj).OldPosition != null)
+            {
+                if (this.OldPosition == null)
+                    return false;
+                if (((ChessMove)obj).OldPosition.X != this.OldPosition.X)
+                    return false;
+                if (((ChessMove)obj).OldPosition.Y != this.OldPosition.Y)
+                    return false;
+            }
+
+            if (((ChessMove)obj).NewPosition != null)
+            {
+                if (this.NewPosition == null)
+                    return false;
+                if (((ChessMove)obj).NewPosition.X != this.NewPosition.X)
+                    return false;
+                if (((ChessMove)obj).NewPosition.Y != this.NewPosition.Y)
+                    return false;
+            }
+
+            if (((ChessMove)obj).Direction != this.Direction)
+                return false;
+
+            if (((ChessMove)obj).SpecialMove != this.SpecialMove)
+                return false;
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
